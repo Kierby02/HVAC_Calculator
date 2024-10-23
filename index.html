@@ -4,122 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HVAC Load Calculator</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            padding: 30px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #343a40;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            color: #495057;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-        input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e9f5f2;
-            border: 1px solid #b1dfbb;
-            border-radius: 5px;
-        }
-        .result h3 {
-            color: #28a745;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        .result ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .result ul li {
-            color: #495057;
-            text-align: left;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-    </style>
 </head>
 <body>
+    <h1>HVAC Load Calculator</h1>
+    
+    <form method="POST">
+        <label for="building_size">Building Size (sq. ft.):</label>
+        <input type="number" id="building_size" name="building_size" placeholder="Enter size" required><br><br>
 
-    <div class="container">
-        <h1>HVAC Load Calculator</h1>
-        <form method="POST">
-            <label for="building_size">Building Size (sq. ft.):</label>
-            <input type="number" name="building_size" id="building_size" placeholder="Enter size" required>
+        <label for="insulation_rvalue">Insulation R-Value:</label>
+        <input type="number" id="insulation_rvalue" name="insulation_rvalue" placeholder="Enter insulation value" required><br><br>
 
-            <label for="insulation_r_value">Insulation R-Value:</label>
-            <input type="number" name="insulation_r_value" id="insulation_r_value" placeholder="Enter insulation value" required>
+        <label for="climate_zone_factor">Climate Zone Factor:</label>
+        <input type="number" id="climate_zone_factor" name="climate_zone_factor" placeholder="Enter climate zone factor" required><br><br>
 
-            <label for="climate_zone_factor">Climate Zone Factor:</label>
-            <input type="number" name="climate_zone_factor" id="climate_zone_factor" placeholder="Enter climate zone factor" step="0.1" required>
+        <label for="num_occupants">Number of Occupants:</label>
+        <input type="number" id="num_occupants" name="num_occupants" placeholder="Enter number of people" required><br><br>
 
-            <label for="num_occupants">Number of Occupants:</label>
-            <input type="number" name="num_occupants" id="num_occupants" placeholder="Enter number of people" required>
+        <button type="submit">Calculate HVAC Load</button>
+    </form>
 
-            <button type="submit">Calculate HVAC Load</button>
-        </form>
+    {% if total_load %}
+        <h2>Total HVAC Load: {{ total_load | round(2) }} BTU/h</h2>
+    {% endif %}
 
-        {% if total_load %}
-        <div class="result">
-            <h3>Total HVAC Load: {{ total_load | round(2) }} BTU/h</h3>
-            <h4>Energy Saving Tips:</h4>
-            <ul>
-                {% for tip in tips %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-    </div>
-
+    <h3>Energy Saving Tips:</h3>
+    {% for tip in tips %}
+        <p>{{ tip }}</p>
+    {% empty %}
+        <p>No tips available at the moment.</p>
+    {% endfor %}
 </body>
 </html>
