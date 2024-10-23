@@ -4,35 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HVAC Load Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        h2 {
+            text-align: center;
+            color: #28a745;
+            margin-top: 30px;
+        }
+
+        .tips {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .tips p {
+            margin: 0;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-    <h1>HVAC Load Calculator</h1>
-    
-    <form method="POST">
-        <label for="building_size">Building Size (sq. ft.):</label>
-        <input type="number" id="building_size" name="building_size" placeholder="Enter size" required><br><br>
 
-        <label for="insulation_rvalue">Insulation R-Value:</label>
-        <input type="number" id="insulation_rvalue" name="insulation_rvalue" placeholder="Enter insulation value" required><br><br>
+    <div class="container">
+        <h1>HVAC Load Calculator</h1>
+        
+        <form method="POST">
+            <label for="building_size">Building Size (sq. ft.):</label>
+            <input type="number" id="building_size" name="building_size" placeholder="Enter size" required>
 
-        <label for="climate_zone_factor">Climate Zone Factor:</label>
-        <input type="number" id="climate_zone_factor" name="climate_zone_factor" placeholder="Enter climate zone factor" required><br><br>
+            <label for="insulation_rvalue">Insulation R-Value:</label>
+            <input type="number" id="insulation_rvalue" name="insulation_rvalue" placeholder="Enter insulation value" required>
 
-        <label for="num_occupants">Number of Occupants:</label>
-        <input type="number" id="num_occupants" name="num_occupants" placeholder="Enter number of people" required><br><br>
+            <label for="climate_zone_factor">Climate Zone Factor:</label>
+            <input type="number" id="climate_zone_factor" name="climate_zone_factor" placeholder="Enter climate zone factor" required>
 
-        <button type="submit">Calculate HVAC Load</button>
-    </form>
+            <label for="num_occupants">Number of Occupants:</label>
+            <input type="number" id="num_occupants" name="num_occupants" placeholder="Enter number of people" required>
 
-    {% if total_load %}
-        <h2>Total HVAC Load: {{ total_load | round(2) }} BTU/h</h2>
-    {% endif %}
+            <button type="submit">Calculate HVAC Load</button>
+        </form>
 
-    <h3>Energy Saving Tips:</h3>
-    {% for tip in tips %}
-        <p>{{ tip }}</p>
-    {% empty %}
-        <p>No tips available at the moment.</p>
-    {% endfor %}
+        {% if total_load %}
+            <h2>Total HVAC Load: {{ total_load | round(2) }} BTU/h</h2>
+        {% endif %}
+
+        <h3>Energy Saving Tips:</h3>
+        <div class="tips">
+            {% for tip in tips %}
+                <p>{{ tip }}</p>
+            {% empty %}
+                <p>No tips available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 HVAC Load Calculator
+    </footer>
+
 </body>
 </html>
