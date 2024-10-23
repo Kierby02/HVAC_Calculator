@@ -86,7 +86,7 @@
     <div class="container">
         <h1>HVAC Load Calculator</h1>
         
-        <form method="POST">
+        <form id="hvac-form">
             <label for="building_size">Building Size (sq. ft.):</label>
             <input type="number" id="building_size" name="building_size" placeholder="Enter size" required>
 
@@ -102,23 +102,34 @@
             <button type="submit">Calculate HVAC Load</button>
         </form>
 
-        {% if total_load %}
-            <h2>Total HVAC Load: {{ total_load | round(2) }} BTU/h</h2>
-        {% endif %}
+        <h2 id="total-load-result"></h2>
 
         <h3>Energy Saving Tips:</h3>
         <div class="tips">
-            {% for tip in tips %}
-                <p>{{ tip }}</p>
-            {% empty %}
-                <p>No tips available at the moment.</p>
-            {% endfor %}
+            <p>Use energy-efficient windows.</p>
+            <p>Install proper insulation.</p>
+            <p>Regular maintenance of HVAC system.</p>
         </div>
     </div>
 
     <footer>
         &copy; 2024 HVAC Load Calculator
     </footer>
+
+    <script>
+        document.getElementById('hvac-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const buildingSize = parseFloat(document.getElementById('building_size').value);
+            const insulationRValue = parseFloat(document.getElementById('insulation_rvalue').value);
+            const climateZoneFactor = parseFloat(document.getElementById('climate_zone_factor').value);
+            const numOccupants = parseInt(document.getElementById('num_occupants').value);
+
+            const totalLoad = (buildingSize * climateZoneFactor * insulationRValue) + (numOccupants * 500);
+
+            document.getElementById('total-load-result').textContent = `Total HVAC Load: ${totalLoad.toFixed(2)} BTU/h`;
+        });
+    </script>
 
 </body>
 </html>
